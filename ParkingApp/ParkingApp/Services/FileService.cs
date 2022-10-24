@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+
 namespace ParkingApp.Services
 {
     internal class FileService : IFileService
     {
-        private const string Filename = "place.json";        
-
+        private const string FileName = "place.json";
+        private const string FolderName = "ParkingApp";
+       
         public Dictionary<int, ParkingPlace> DeserializeState()
         {
             var pathToRead = GetPathDirectory();
@@ -17,27 +20,20 @@ namespace ParkingApp.Services
             //}
             return res;
         }
-
-        public string GetPathDirectory()
+        
+        public string? GetPathDirectory()
         {
-            string pathFile = "";
-            var dir = Directory.GetCurrentDirectory();
-            var rr = Directory.GetParent(dir);
-
-            if (rr is not null)
+            //c:/User/users/AppData/Local
+            var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);                  
+            string locationFile = Path.Combine(dirApp, FolderName, FileName);
+            var res = Extention.CheckPathValidCharacters(this,locationFile);
+            //Console.WriteLine(location);
+            if (res)
             {
-                var tt = rr.Parent;
-                if (tt is not null)
-                {
-                    var ee = tt.Parent;
-                    if (ee is not null)
-                    {
-                        string path = Path.Combine(ee.FullName, Filename);
-                        pathFile = path;
-                    }
-                }
+                string dir = Path.GetDirectoryName(locationFile)??throw new ArgumentException("Error get directory");
+                _ = Extention.IsExistDirectory(this, dir);
             }
-            return pathFile;
+            return locationFile; 
         }
 
         public void SerializeState(Dictionary<int, ParkingPlace> dictionary)
