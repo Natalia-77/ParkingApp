@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-
 namespace ParkingApp.Services
 {
-    internal class FileService : IFileService
+    public class FileService : IFileService
     {
         private const string FileName = "place.json";
         private const string FolderName = "ParkingApp";
@@ -13,15 +11,10 @@ namespace ParkingApp.Services
             var pathToRead = GetPathDirectory();
             string result = File.ReadAllText(pathToRead);
 
-            Dictionary<int, ParkingPlace> res = JsonConvert.DeserializeObject<Dictionary<int, ParkingPlace>>(result)!;
-            //foreach (KeyValuePair<int, ParkingPlace> item in res)
-            //{
-            //    Console.WriteLine(item.Value.NumberPlace);
-            //}
-            return res;
-        }
-        
-        public string? GetPathDirectory()
+            Dictionary<int, ParkingPlace> resultDeserialize = JsonConvert.DeserializeObject<Dictionary<int, ParkingPlace>>(result )!;
+            return resultDeserialize;
+        }        
+        public string GetPathDirectory()
         {
             //c:/User/users/AppData/Local
             var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);                  

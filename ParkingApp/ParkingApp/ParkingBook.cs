@@ -1,12 +1,7 @@
-﻿using Newtonsoft.Json;
-using ParkingApp.Services;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml;
-
+﻿using ParkingApp.Services;
 namespace ParkingApp
 {
-    internal class ParkingBook
+    public class ParkingBook
     {
         private readonly FileService _fileService;
         public static Dictionary<int, ParkingPlace> dictionary;
@@ -53,38 +48,38 @@ namespace ParkingApp
                 {
                     Console.WriteLine($"Key = {item.Key}, Value = {item.Value.IsOccupied}, {item.Value.NumberPlace}");
                 }
-            }           
-            //_fileService.SerializeState(dictionary);
-            //var res = _fileService.DeserializeState();
-           // Console.WriteLine("Deserialize:");
-            //foreach (KeyValuePair<int, ParkingPlace> item in res)
-            //{
-            //    Console.WriteLine(item.Value.NumberPlace);
-            //}         
-
-        }      
+            }
+        }
 
         public void SaveState()
         {            
-            _fileService.SerializeState(Dictionary);
+            _fileService.SerializeState(dictionary);
         }
 
         public Dictionary<int,ParkingPlace> GetDataState()
         {
             var res = _fileService.DeserializeState();
             foreach (KeyValuePair<int, ParkingPlace> item in res)
-            {
-                Console.WriteLine(item.Value.NumberPlace);
-            }
+            {         
+                if (item.Value.NumberCar != null)
+                {
+                    var car = new Car(item.Value.NumberCar.NumberOfCar);
+                    Dictionary.Add(item.Key, value: new ParkingPlace() { IsOccupied = item.Value.IsOccupied, NumberPlace = item.Value.NumberPlace, NumberCar = car });
+                }
+                else
+                {
+                    Dictionary.Add(item.Key, value: new ParkingPlace() { IsOccupied = item.Value.IsOccupied, NumberPlace = item.Value.NumberPlace, NumberCar = item.Value.NumberCar });
+                }
+            }            
             return res;
         }
 
-        public void AddCar(Car car)
-        {
-            cars.Add(car);
-            carSpace++;
-            dictionary[1] = new ParkingPlace {NumberPlace = 11, IsOccupied = true, NumberCar = car };
-        }       
+        //public void AddCar(Car car)
+        //{
+        //    cars.Add(car);
+        //    carSpace++;
+        //    dictionary[1] = new ParkingPlace {NumberPlace = 11, IsOccupied = true, NumberCar = car };
+        //}       
 
 
     }

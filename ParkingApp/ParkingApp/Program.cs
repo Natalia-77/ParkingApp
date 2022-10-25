@@ -7,10 +7,13 @@ Console.WriteLine("Hello, World!");
 ParkingBook parkingBook = new ParkingBook();
 //parkingBook.FirstInitDictionary();
 //parkingBook.ShowDict();
+//parkingBook.SaveState();
 //Car car = new Car("1234AB");
 //parkingBook.AddCar(car);
+//parkingBook.SaveState();
 //parkingBook.ShowDict();
 parkingBook.GetDataState();
+parkingBook.ShowDict();
 
 
 Console.ReadKey();
