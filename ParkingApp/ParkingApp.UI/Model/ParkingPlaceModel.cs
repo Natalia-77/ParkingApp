@@ -4,6 +4,6 @@
     {
         public int NumberPlace { get; init; }
         public bool IsOccupied { get; init; }
-        public CarModel NumberCar { get; init; }
+        public CarModel? NumberCar { get; init; }
     }    
 }

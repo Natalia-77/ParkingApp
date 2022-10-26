@@ -1,11 +1,14 @@
-﻿namespace ParkingApp.UI
+﻿using ParkingApp.UI.ViewModel;
+
+namespace ParkingApp.UI
 {
     public partial class MainPage : ContentPage
     {       
 
-        public MainPage()
+        public MainPage(ParkingBookViewModel viewModel)
         {
             InitializeComponent();
+            BindingContext = viewModel;
         }       
     }
 }

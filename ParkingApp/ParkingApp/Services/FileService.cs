@@ -9,7 +9,7 @@ namespace ParkingApp.Services
         public Dictionary<int, ParkingPlace> DeserializeState()
         {
             var pathToRead = GetPathDirectory();
-            string result = File.ReadAllText(pathToRead);
+            string result =  File.ReadAllText(pathToRead);
 
             Dictionary<int, ParkingPlace> resultDeserialize = JsonConvert.DeserializeObject<Dictionary<int, ParkingPlace>>(result )!;
             return resultDeserialize;

@@ -1,28 +1,43 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using ParkingApp.UI.Model;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ParkingApp.UI.ViewModel
 {
-    public partial class ParkingBookViewModel :BaseViewModel
+    public partial class ParkingBookViewModel : BaseViewModel
     {
-        public ObservableCollection<ParkingDictionaryModel> Parkings { get; } = new();
-        ParkingBook _parkingBook;
-        public ParkingBookViewModel(ParkingBook parkingSevice)
+        public ObservableCollection<ParkingPlaceModel> Parkings { get; } = new();        
+        ParkingBook _parkingBookService;
+        public ParkingBookViewModel(ParkingBook parkingBookSevice)
         {
-            _parkingBook = parkingSevice;
+            Title = "Parking Book";
+            _parkingBookService = parkingBookSevice;
         }
 
         [RelayCommand]
-        async Task GetPlacesAsync()
+        public Task GetPlaces()
         {
-            var places = _parkingBook.GetDataState();
-            //Parkings.Add
+            try
+            {
+                var places = _parkingBookService.GetDataState();
+                foreach (KeyValuePair<int, ParkingPlace> item in places)
+                {
+                    var obj = new ParkingPlaceModel()
+                    {
+                        NumberPlace = item.Value.NumberPlace,
+                        IsOccupied = item.Value.IsOccupied,
+                        NumberCar = new CarModel(item.Value.NumberCar.NumberOfCar)
+
+                    };
+                    Parkings.Add(obj);
+                }
+            }
+            catch(Exception ex)
+            {
+                Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }            
+
+            return Task.CompletedTask;
         }
     }
 }
