@@ -16,27 +16,34 @@ namespace ParkingApp.UI.ViewModel
 
         [RelayCommand]
         public Task GetPlaces()
-        {
+        {            
             try
             {
                 var places = _parkingBookService.GetDataState();
-                foreach (KeyValuePair<int, ParkingPlace> item in places)
-                {
-                    var obj = new ParkingPlaceModel()
-                    {
-                        NumberPlace = item.Value.NumberPlace,
-                        IsOccupied = item.Value.IsOccupied,
-                        NumberCar = new CarModel(item.Value.NumberCar.NumberOfCar)
+                foreach (var item in places)
+                {                    
+                        var obj = new ParkingPlaceModel()
+                        {
+                            PlaceNumber = item.PlaceNumber,
+                            IsOccupied = item.IsOccupied,
+                            OccupiedBy = new CarModel(item.OccupiedBy?.NumberOfCar)?? null
 
-                    };
+                        };                    
                     Parkings.Add(obj);
                 }
             }
             catch(Exception ex)
             {
-                Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+                Shell.Current.DisplayAlert("Error get data places!", ex.Message, "OK");
             }            
 
+            return Task.CompletedTask;
+        }
+
+        [RelayCommand]
+        public Task GetInfo(ParkingPlaceModel model)
+        {
+            Shell.Current.DisplayAlert("Current place number", model.PlaceNumber.ToString(), "OK");
             return Task.CompletedTask;
         }
     }
