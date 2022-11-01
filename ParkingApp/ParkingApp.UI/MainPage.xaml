@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:ParkingApp.UI.Model"
+             xmlns:viewmodel="clr-namespace:ParkingApp.UI.ViewModel"
+             x:Class="ParkingApp.UI.MainPage"
+             x:DataType="viewmodel:ParkingBookViewModel"
+             Title="Parking Book">
+    <ContentPage.Content>
+
+
+
+        <Grid 
+         ColumnDefinitions="*,*"
+         RowDefinitions="*,Auto"
+         ColumnSpacing="5"
+         RowSpacing="5" >
+            <Image Source="mainfone.jpg"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="FillAndExpand"
+               Aspect="AspectFill" 
+               Grid.Row="0" 
+               Grid.Column="0" 
+               Grid.RowSpan="2"
+               Grid.ColumnSpan="2"/>
+        <CollectionView 
+            ItemsSource="{Binding Parkings}"
+            SelectionMode="None"
+            ItemsLayout="VerticalGrid, 2"           
+            >
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:ParkingPlaceModel">
+                    <Grid x:Name="abc" BackgroundColor="BurlyWood" Padding="5">                          
+                        <Frame HeightRequest="120" WidthRequest="300" >
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParkingBookViewModel}}, Path=GetInfoCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid  ColumnDefinitions="*,*" RowDefinitions="78,*,*"  >
+                                <FlexLayout Direction="Column" JustifyContent="SpaceAround" Margin="5,0,0,0">
+                                    <Label FontSize="Medium"                                           
+                                           Text="{Binding  PlaceNumber}" />
+                                    <Label FontSize="Medium"                                         
+                                           Text="{Binding  IsOccupied}" />
+                                </FlexLayout>
+                                <Label x:Name="CounterLabel" FontSize="Medium" 
+                                           Grid.Column="1"
+                                           Margin="5"                                       
+                                           Text="{Binding OccupiedBy.NumberOfCar}"/>
+                            </Grid>
+                        </Frame>                      
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button x:Name="Btn"
+                Clicked="TapGestureRecognizer_Tapped_1"
+                 Text="Get places" 
+                BackgroundColor="Green"
+                Command="{Binding GetPlacesCommand}" 
+               
+                HeightRequest="50"
+                Grid.Row="1"
+                WidthRequest="100"
+                HorizontalOptions="Start"
+                Grid.Column="0"                
+                Margin="25,0,0,30">
+            <Button.Shadow>
+                <Shadow Brush="Red"
+                   Offset="10,10"
+                   Radius="10"
+                   Opacity="0.9"/>
+            </Button.Shadow>
+            </Button>
+        
+
+    </Grid>
+    </ContentPage.Content>
+</ContentPage>

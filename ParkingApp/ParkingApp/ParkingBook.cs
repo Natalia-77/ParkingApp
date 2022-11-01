@@ -1,90 +1,76 @@
-﻿using Newtonsoft.Json;
-using ParkingApp.Services;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Xml;
-
+﻿using ParkingApp.Services;
 namespace ParkingApp
 {
-    internal class ParkingBook
+    public class ParkingBook
     {
-        private readonly FileService _fileService;
-        public static Dictionary<int, ParkingPlace> dictionary;
-        private List<Car> cars;
-        private int carSpace = 0;
-        public Dictionary<int, ParkingPlace> Dictionary
-        {
-            get
-            {
-                return dictionary;
-            }
-        }
+        private readonly SerializationService _fileService;
+        private readonly ParkingPlace[] parkingPlace = new ParkingPlace[10];      
         public ParkingBook()
-        {
-            dictionary = new Dictionary<int, ParkingPlace>();
-            cars = new List<Car>(carSpace);
-            _fileService = new FileService();
-            
+        {            
+            _fileService = new SerializationService();            
         }
 
-        public void FirstInitDictionary()
+        public void InitDictionary()
         {
-            dictionary.Add(1, new ParkingPlace { IsOccupied = false, NumberPlace = 11 });
-            dictionary.Add(2, new ParkingPlace { IsOccupied = false, NumberPlace = 12 });
-            dictionary.Add(3, new ParkingPlace { IsOccupied = false, NumberPlace = 13 });
-            dictionary.Add(4, new ParkingPlace { IsOccupied = false, NumberPlace = 14 });
-            dictionary.Add(5, new ParkingPlace { IsOccupied = false, NumberPlace = 15 });
-            dictionary.Add(6, new ParkingPlace { IsOccupied = false, NumberPlace = 16 });
-            dictionary.Add(7, new ParkingPlace { IsOccupied = false, NumberPlace = 17 });
-            dictionary.Add(8, new ParkingPlace { IsOccupied = false, NumberPlace = 18 });
-            dictionary.Add(9, new ParkingPlace { IsOccupied = false, NumberPlace = 19 });
-            dictionary.Add(10, new ParkingPlace { IsOccupied = false, NumberPlace = 20 });
+            parkingPlace[0] = new ParkingPlace() { IsOccupied = true, PlaceNumber = 11, OccupiedBy = new Car("1234 AB") };
+            parkingPlace[1] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 12 };
+            parkingPlace[2] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 13 };
+            parkingPlace[3] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 14 };
+            parkingPlace[4] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 15 };
+            parkingPlace[5] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 16 };
+            parkingPlace[6] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 17 };
+            parkingPlace[7] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 18 };
+            parkingPlace[8] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 19 };
+            parkingPlace[9] = new ParkingPlace() { IsOccupied = false, PlaceNumber = 20 };
         }
 
         public void ShowDict()
         {
-            foreach (KeyValuePair<int,ParkingPlace> item in dictionary)
-            {               
-                if (item.Value.NumberCar != null)
+            foreach (var item in parkingPlace)
+            {
+                if (item.OccupiedBy != null)
                 {
-                    Console.WriteLine($"Key = {item.Key}, Value = {item.Value.IsOccupied}, {item.Value.NumberPlace} {item.Value.NumberCar.NumberOfCar}");
+                    Console.WriteLine($"{item.PlaceNumber}-->{item.OccupiedBy.NumberOfCar}");
                 }
                 else
                 {
-                    Console.WriteLine($"Key = {item.Key}, Value = {item.Value.IsOccupied}, {item.Value.NumberPlace}");
+                    Console.WriteLine($"Key = {item.PlaceNumber}-->{item.IsOccupied}");
                 }
-            }           
-            //_fileService.SerializeState(dictionary);
-            //var res = _fileService.DeserializeState();
-           // Console.WriteLine("Deserialize:");
-            //foreach (KeyValuePair<int, ParkingPlace> item in res)
-            //{
-            //    Console.WriteLine(item.Value.NumberPlace);
-            //}         
-
-        }      
+            }
+        }
 
         public void SaveState()
         {            
-            _fileService.SerializeState(Dictionary);
+            _fileService.SerializeState(parkingPlace);
         }
 
-        public Dictionary<int,ParkingPlace> GetDataState()
+        public ParkingPlace[]  GetDataState()
         {
-            var res = _fileService.DeserializeState();
-            foreach (KeyValuePair<int, ParkingPlace> item in res)
+            return _fileService.DeserializeState();          
+        }
+
+        public void Show()
+        {
+            var des = GetDataState();
+            foreach (var item in des)
             {
-                Console.WriteLine(item.Value.NumberPlace);
+                if (item.OccupiedBy != null)
+                {
+                    Console.WriteLine($"{item.PlaceNumber}-->{item.OccupiedBy.NumberOfCar}");
+                }
+                else
+                {
+                    Console.WriteLine($"Key = {item.PlaceNumber}-->{item.IsOccupied}");
+                }
             }
-            return res;
         }
 
-        public void AddCar(Car car)
-        {
-            cars.Add(car);
-            carSpace++;
-            dictionary[1] = new ParkingPlace {NumberPlace = 11, IsOccupied = true, NumberCar = car };
-        }       
+        //public void AddCar(Car car)
+        //{
+        //    cars.Add(car);
+        //    carSpace++;
+        //    dictionary[1] = new ParkingPlace {NumberPlace = 11, IsOccupied = true, NumberCar = car };
+        //}       
 
 
     }

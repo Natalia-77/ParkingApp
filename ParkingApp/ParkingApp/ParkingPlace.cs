@@ -2,8 +2,8 @@
 {
    public class ParkingPlace
     {
-        public int NumberPlace { get; set; }
-        public bool IsOccupied { get; set; }
-        public Car? NumberCar { get; set; }
+        public int PlaceNumber { get; init; }
+        public bool IsOccupied { get; init; }
+        public Car? OccupiedBy { get; init; }
     }
 }
