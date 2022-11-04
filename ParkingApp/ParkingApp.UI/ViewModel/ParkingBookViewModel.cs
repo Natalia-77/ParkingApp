@@ -46,5 +46,11 @@ namespace ParkingApp.UI.ViewModel
             Shell.Current.DisplayAlert("Current place number", model.PlaceNumber.ToString(), "OK");
             return Task.CompletedTask;
         }
+
+        //[RelayCommand]
+        //public Task  GetPlaceDetails(ParkingPlaceModel parkingPlace)
+        //{
+
+        //}
     }
 }

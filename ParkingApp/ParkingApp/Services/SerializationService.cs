@@ -19,6 +19,7 @@ namespace ParkingApp.Services
             var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string locationFile = Path.Combine(dirApp, FolderName, FileName);
             string dir = Path.GetDirectoryName(locationFile) ?? throw new ArgumentException("Error get directory");
+            //string location = Path.Combine(FileSystem.Current.AppDataDirectory, FolderName, FileName);
             Utils.EnsureDirectory(dir);
             return locationFile;
         }
