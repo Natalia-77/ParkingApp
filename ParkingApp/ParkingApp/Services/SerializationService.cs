@@ -5,36 +5,56 @@ namespace ParkingApp.Services
     {
         private const string FileName = "place.json";
         private const string FolderName = "ParkingApp";
-       
-        public ParkingPlace[] DeserializeState()
-        {
-            var pathToRead = GetPathDirectory();
-            string result =  File.ReadAllText(pathToRead);           
-            ParkingPlace[] dataResult = JsonConvert.DeserializeObject<ParkingPlace[]>(result)??throw new ArgumentNullException(nameof(result),"Error deserialize file");
-            return dataResult;
-        }
-        public string GetPathDirectory()
-        {
-            //c:/User/users/AppData/Local
-            var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string locationFile = Path.Combine(dirApp, FolderName, FileName);
-            string dir = Path.GetDirectoryName(locationFile) ?? throw new ArgumentException("Error get directory");
-            Utils.EnsureDirectory(dir);
-            return locationFile;
-        }
 
-        public void SerializeState(ParkingPlace[] places)
-        {           
-            if (places is not null)
+        private readonly string _cacheFilePath;
+       
+        public SerializationService(string? cacheFilePath = null)
+        {
+            if (string.IsNullOrWhiteSpace(cacheFilePath))
             {
-                var str = JsonConvert.SerializeObject(places);
-                var pathToWrite = GetPathDirectory();
-                File.WriteAllText(pathToWrite, str);               
-            }           
+                _cacheFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), FolderName, FileName);
+            }
             else
             {
-                throw new NullReferenceException(nameof(places));                
+                _cacheFilePath = cacheFilePath;
             }
+        }
+
+
+        public ParkingBookModel DeserializeState()
+        {
+            var cacheFile = GetCacheFilePath();
+
+            if (!File.Exists(cacheFile))
+            {
+                return ParkingBookModel.DefaultInstance;
+            }
+            string result =  File.ReadAllText(cacheFile);
+
+            ParkingBookModel? dataResult = JsonConvert.DeserializeObject<ParkingBookModel>(result);
+            if (dataResult is null)
+            {
+                Console.WriteLine($"Error deserializing '{cacheFile}', the file is not in expected format.");
+                return ParkingBookModel.DefaultInstance;
+            }
+            return dataResult;
+        }
+        public string GetCacheFilePath()
+        {
+            string dir = Path.GetDirectoryName(_cacheFilePath) ?? throw new ArgumentException("Error get directory");
+            Utils.EnsureDirectory(dir);
+            return _cacheFilePath;
+        }
+
+        public void SerializeState(ParkingBookModel book)
+        {
+            if (book is null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+            var str = JsonConvert.SerializeObject(book);
+            var pathToWrite = GetCacheFilePath();
+            File.WriteAllText(pathToWrite, str);
         }
     }
 }

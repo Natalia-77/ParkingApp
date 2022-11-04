@@ -1,8 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ParkingApp;
-Console.WriteLine("Hello, World!");
+using ParkingApp.Services;
 
-ParkingBook parkingBook = new ParkingBook();
+ISerializationService serializationService = new SerializationService();
+ParkingBook parkingBook = ParkingBook.GetDataState(serializationService);
 //parkingBook.InitDictionary();
 //parkingBook.ShowDict();
 //parkingBook.SaveState();

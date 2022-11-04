@@ -1,6 +1,8 @@
-﻿namespace ParkingApp
+﻿using ParkingApp.Model;
+
+namespace ParkingApp
 {
-   public class ParkingPlace
+    public class ParkingPlace
     {
         public int PlaceNumber { get; init; }
         public bool IsOccupied { get; init; }

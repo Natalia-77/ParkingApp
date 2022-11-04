@@ -1,4 +1,4 @@
-﻿namespace ParkingApp
+﻿namespace ParkingApp.Model
 {
     public class Car
     {
