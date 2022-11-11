@@ -1,40 +1,52 @@
 ﻿using Newtonsoft.Json;
 namespace ParkingApp.Services
 {
-    public class SerializationService : ISerializationService
+    internal class SerializationService : ISerializationService
     {
         private const string FileName = "place.json";
         private const string FolderName = "ParkingApp";
-       
-        public ParkingPlace[] DeserializeState()
+        private readonly string _cacheFilePath;       
+
+        public SerializationService(string? cacheFilePath=null)
         {
+            _cacheFilePath = cacheFilePath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), FolderName, FileName);
+            
+        }
+
+         public ParkingBookModel DeserializeState()
+         {
             var pathToRead = GetPathDirectory();
-            string result =  File.ReadAllText(pathToRead);           
-            ParkingPlace[] dataResult = JsonConvert.DeserializeObject<ParkingPlace[]>(result)??throw new ArgumentNullException(nameof(result),"Error deserialize file");
+            if (!File.Exists(pathToRead))
+            {
+                var defaultModel = new ParkingBookModel().Default;//попыталась доступится до проперти с дефолтными значениями.
+                return new ParkingBookModel(defaultModel);//работает-но выглядит оно ужасно.
+            }
+            string result = File.ReadAllText(pathToRead);
+            ParkingBookModel dataResult = JsonConvert.DeserializeObject<ParkingBookModel>(result) ?? throw new ArgumentNullException(nameof(result), "Error deserialize file");
             return dataResult;
         }
         public string GetPathDirectory()
         {
             //c:/User/users/AppData/Local
-            var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string locationFile = Path.Combine(dirApp, FolderName, FileName);
-            string dir = Path.GetDirectoryName(locationFile) ?? throw new ArgumentException("Error get directory");
+            //var dirApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            //string locationFile = Path.Combine(dirApp, FolderName, FileName);
+            string dir = Path.GetDirectoryName(_cacheFilePath) ?? throw new ArgumentException("Error get directory");
             //string location = Path.Combine(FileSystem.Current.AppDataDirectory, FolderName, FileName);
             Utils.EnsureDirectory(dir);
-            return locationFile;
+            return _cacheFilePath;
         }
 
-        public void SerializeState(ParkingPlace[] places)
+        public void SerializeState(ParkingBookModel parkingBook)
         {           
-            if (places is not null)
+            if (parkingBook is not null)
             {
-                var str = JsonConvert.SerializeObject(places);
+                var str = JsonConvert.SerializeObject(parkingBook);
                 var pathToWrite = GetPathDirectory();
                 File.WriteAllText(pathToWrite, str);               
             }           
             else
             {
-                throw new NullReferenceException(nameof(places));                
+                throw new ArgumentNullException(nameof(parkingBook));                
             }
         }
     }

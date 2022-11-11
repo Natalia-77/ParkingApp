@@ -2,8 +2,8 @@
 {
     public interface ISerializationService
     {
-        void SerializeState(ParkingPlace[] places );
-        ParkingPlace[] DeserializeState();
+        void SerializeState(ParkingBookModel parkingBook);
+        ParkingBookModel DeserializeState();
         string GetPathDirectory();
     }
 }
