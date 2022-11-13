@@ -15,8 +15,9 @@ namespace ParkingApp.UI
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            builder.Services.AddSingleton<ParkingBook>();
-            builder.Services.AddScoped<ISerializationService, SerializationService>();
+            builder.Services.AddSingleton<ParkingBookModel>();
+            builder.Services.AddSingleton<ISerializationService,SerializationService>();
+            builder.Services.AddSingleton<IParkingService,ParkingService>();
             builder.Services.AddSingleton<ParkingBookViewModel>();
             builder.Services.AddSingleton<MainPage>();
 

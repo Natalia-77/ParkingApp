@@ -32,6 +32,7 @@ namespace ParkingApp
 
             return new ParkingBookModel(_parkingPlace);
         }
+        public ParkingPlace[] ParkingPlaces { get => _parkingPlace; }
 
        public ParkingPlace[] Default{ get; } = (new[]
         {

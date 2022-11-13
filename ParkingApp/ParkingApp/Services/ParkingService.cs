@@ -1,6 +1,9 @@
-﻿namespace ParkingApp.Services
-{
-    internal class ParkingService
+﻿using System.Runtime.CompilerServices;
+
+[assembly:InternalsVisibleTo("ParkingApp.UI")]
+namespace ParkingApp.Services
+{    
+    internal class ParkingService:IParkingService
     {
         private readonly ParkingBookModel _parkingBook = new ParkingBookModel() ;        
         private readonly ISerializationService _service;
@@ -15,25 +18,19 @@
         {
             _parkingBook = parkingBook;
             
-        }
+        }       
 
         public void SaveState()
         {
             _service.SerializeState(_parkingBook);
-        }
+        }    
 
-        public ParkingService GetState()
+        public ParkingBookModel InitParkingPlaces()
         {
             var model = _service.DeserializeState();
-            return new ParkingService(model,_service);      
-                                  
-        }
+            var res= new ParkingService(model, _service);
+            return new ParkingBookModel(res._parkingBook.ParkingPlaces);
 
-        public void Show()
-        {
-            var modelResult = GetState();
-            ParkingBookModel model = modelResult._parkingBook;           
-            model.Show();
-        }
+        }      
     }
 }

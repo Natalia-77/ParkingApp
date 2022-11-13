@@ -1,4 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ParkingApp.UI")]
+[assembly:InternalsVisibleTo("ParkingApp.UnitTests")]
+
 namespace ParkingApp.Services
 {
     internal class SerializationService : ISerializationService

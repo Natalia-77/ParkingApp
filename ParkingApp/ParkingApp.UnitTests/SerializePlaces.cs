@@ -8,7 +8,7 @@ namespace ParkingApp.UnitTests
         [TestMethod]
         public void Serialize_empty_places()
         {
-            SerializationService service = new SerializationService();
+            ISerializationService service = new SerializationService();
             Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsException<NullReferenceException>(() => service.SerializeState(null));
         }        
     }

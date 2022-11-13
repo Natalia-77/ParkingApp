@@ -1,5 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using ParkingApp;
 using ParkingApp.Services;
 
 class Program
@@ -10,7 +9,8 @@ class Program
         ParkingService servise = new ParkingService(serv);
         //servise.SaveState();
         servise.GetState();
-        servise.Show();    
+        
+        //servise.Show();    
         Console.ReadKey();
     }
 }
