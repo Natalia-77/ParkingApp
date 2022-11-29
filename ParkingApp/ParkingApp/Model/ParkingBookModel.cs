@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
+//[assembly: InternalsVisibleTo("ParkingApp.UI")]
 namespace ParkingApp
 {
     public class ParkingBookModel
@@ -51,19 +53,19 @@ namespace ParkingApp
 
         //ниже закомментирован проперти.В таком виде выдает Overflow...Выще написала по-другому-так все ок.
 
-        //public ParkingBookModel Default { get; } = new ParkingBookModel(new[]
-        //{
-        //    new ParkingPlace() { IsOccupied = true, PlaceNumber = 11, OccupiedBy = new Car("1112 AB") },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 12 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 13 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 14 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 15 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 16 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 17 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 18 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 19 },
-        //    new ParkingPlace() { IsOccupied = false, PlaceNumber = 20 }
-        //});
+        public static ParkingBookModel Defaults { get; } = new ParkingBookModel(new[]
+        {
+            new ParkingPlace() { IsOccupied = true, PlaceNumber = 11, OccupiedBy = new Car("1112 AB") },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 12 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 13 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 14 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 15 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 16 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 17 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 18 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 19 },
+            new ParkingPlace() { IsOccupied = false, PlaceNumber = 20 }
+        });
 
         public void Show()
         {

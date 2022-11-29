@@ -1,8 +1,11 @@
-﻿namespace ParkingApp.Services
+﻿using System.Runtime.CompilerServices;
+
+namespace ParkingApp.Services
 {
     public interface IParkingService
     {
-        void SaveState();
-        ParkingBookModel InitParkingPlaces();
+       public void SaveState();
+        // ParkingService InitParkingPlaces();
+        public ParkingBookModel GetPlaces();
     }
 }

@@ -20,7 +20,7 @@ namespace ParkingApp.UI.ViewModel
         {
             try
             {
-                var places = _parkingBookService.InitParkingPlaces();
+                var places = _parkingBookService.GetPlaces();                            
                 foreach (var item in places.ParkingPlaces)
                 {
                     var obj = new ParkingPlaceModel()
@@ -31,8 +31,8 @@ namespace ParkingApp.UI.ViewModel
 
                     };
                     Parkings.Add(obj);
-                }           
-                
+                }
+
             }
             catch (Exception ex)
             {

@@ -5,12 +5,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        ISerializationService serv = new SerializationService();
-        ParkingService servise = new ParkingService(serv);
+        //ISerializationService serv = new SerializationService();
+        //ParkingService servise = new ParkingService(serv);
         //servise.SaveState();
-        servise.GetState();
-        
+        //servise.InitParkingPlaces();
         //servise.Show();    
+       
         Console.ReadKey();
     }
 }

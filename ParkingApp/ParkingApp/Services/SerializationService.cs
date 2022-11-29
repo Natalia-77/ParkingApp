@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.CompilerServices;
-
 [assembly: InternalsVisibleTo("ParkingApp.UI")]
-[assembly:InternalsVisibleTo("ParkingApp.UnitTests")]
-
+[assembly: InternalsVisibleTo("ParkingApp.UnitTests")]
 namespace ParkingApp.Services
 {
     internal class SerializationService : ISerializationService
@@ -23,8 +21,9 @@ namespace ParkingApp.Services
             var pathToRead = GetPathDirectory();
             if (!File.Exists(pathToRead))
             {
-                var defaultModel = new ParkingBookModel().Default;//попыталась доступится до проперти с дефолтными значениями.
-                return new ParkingBookModel(defaultModel);//работает-но выглядит оно ужасно.
+                var defaultModel = ParkingBookModel.Defaults;//попыталась доступится до проперти с дефолтными значениями.
+                //return new ParkingBookModel(defaultModel);//работает-но выглядит оно ужасно.
+                return defaultModel;
             }
             string result = File.ReadAllText(pathToRead);
             ParkingBookModel dataResult = JsonConvert.DeserializeObject<ParkingBookModel>(result) ?? throw new ArgumentNullException(nameof(result), "Error deserialize file");
