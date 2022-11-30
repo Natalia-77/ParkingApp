@@ -33,10 +33,13 @@
                 <DataTemplate x:DataType="model:ParkingPlaceModel">
                     <Grid x:Name="abc" BackgroundColor="BurlyWood" Padding="5">                          
                         <Frame HeightRequest="120" WidthRequest="300" >
+                            
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParkingBookViewModel}}, Path=GetInfoCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ParkingBookViewModel}}, Path=GetPlaceDetailsCommand}"
+                                       
                                         CommandParameter="{Binding .}"/>
+                                    
                                 </Frame.GestureRecognizers>
                                 <Grid  ColumnDefinitions="*,*" RowDefinitions="78,*,*"  >
                                 <FlexLayout Direction="Column" JustifyContent="SpaceAround" Margin="5,0,0,0">
@@ -59,8 +62,7 @@
                 Clicked="TapGestureRecognizer_Tapped_1"
                  Text="Get places" 
                 BackgroundColor="Green"
-                Command="{Binding GetPlacesCommand}" 
-               
+                Command="{Binding GetPlacesCommand}"                
                 HeightRequest="50"
                 Grid.Row="1"
                 WidthRequest="100"

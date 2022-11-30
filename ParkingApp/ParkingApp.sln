@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingApp", "ParkingApp\Pa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingApp.UI", "ParkingApp.UI\ParkingApp.UI.csproj", "{734EE1C7-1BF6-4F2F-88CA-C76C8785BDE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingApp.UnitTests", "ParkingApp.UnitTests\ParkingApp.UnitTests.csproj", "{E04B3678-1A03-432D-90D2-858BCC81E221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingApp.UnitTests", "ParkingApp.UnitTests\ParkingApp.UnitTests.csproj", "{E04B3678-1A03-432D-90D2-858BCC81E221}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

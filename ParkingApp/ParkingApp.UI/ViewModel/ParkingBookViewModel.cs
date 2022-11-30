@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using ParkingApp.Services;
 using ParkingApp.UI.Model;
+using ParkingApp.UI;
 using System.Collections.ObjectModel;
+using ParkingApp.UI.View;
 
 namespace ParkingApp.UI.ViewModel
 {
@@ -49,10 +51,16 @@ namespace ParkingApp.UI.ViewModel
             return Task.CompletedTask;
         }
 
-        //[RelayCommand]
-        //public Task GetPlaceDetails(ParkingPlaceModel parkingPlace)
-        //{
-
-        //}
+        [RelayCommand]
+        public async Task GetPlaceDetails(ParkingPlaceModel parkingPlace)
+        {
+            if (parkingPlace is null)
+            {
+                return;
+            }
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Place={parkingPlace.PlaceNumber}"); 
+              // new Dictionary<string, object> { { "Place", parkingPlace } });
+            
+        }
     }
 }

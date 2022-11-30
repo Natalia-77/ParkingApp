@@ -10,13 +10,13 @@ namespace ParkingApp.UI
         {
             InitializeComponent();
             BindingContext = viewModel;
-        }               
+        }
 
         private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
         {
-            Btn.Text = "Ok";           
-            
+            Btn.Text = "Ok";
+
         }
-        
+
     }
 }

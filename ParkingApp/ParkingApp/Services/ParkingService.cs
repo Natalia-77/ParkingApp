@@ -6,15 +6,16 @@
         public ParkingBookModel ParkingBook { get; }
         private readonly ISerializationService _service;
 
-        public ParkingService(ISerializationService service)
-        {
-            _service = service ?? throw new ArgumentNullException(nameof(service));            
+        //public ParkingService(ISerializationService service)
+        //{
+        //    _service = service ?? throw new ArgumentNullException(nameof(service));            
             
-        }
+        //}
 
-        public ParkingService(ParkingBookModel parkingBook, ISerializationService service):this(service)
+        public ParkingService(ParkingBookModel parkingBook, ISerializationService service)
         {
             ParkingBook = parkingBook;
+            _service = service;
             
         }       
 
