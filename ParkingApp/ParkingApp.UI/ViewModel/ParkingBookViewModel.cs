@@ -58,9 +58,11 @@ namespace ParkingApp.UI.ViewModel
             {
                 return;
             }
-            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Place={parkingPlace.PlaceNumber}"); 
-              // new Dictionary<string, object> { { "Place", parkingPlace } });
-            
+            // await Shell.Current.GoToAsync($"{nameof(DetailsPage)}?Place={parkingPlace.PlaceNumber}"); 
+            // new Dictionary<string, object> { { "Place", parkingPlace } });
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}",
+            new Dictionary<string, object> { { "Places", parkingPlace } });
+
         }
     }
 }

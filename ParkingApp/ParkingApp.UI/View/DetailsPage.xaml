@@ -7,7 +7,7 @@
              Title="Details Page">
     <VerticalStackLayout>
         <Label 
-            Text="{Binding Place}"
+            Text="{Binding Place.PlaceNumber}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>
