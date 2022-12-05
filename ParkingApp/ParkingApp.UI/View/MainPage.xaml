@@ -32,7 +32,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:ParkingPlaceModel">
                     <Grid x:Name="abc" BackgroundColor="BurlyWood" Padding="5">                          
-                        <Frame HeightRequest="120" WidthRequest="300" >
+                        <Frame HeightRequest="120" WidthRequest="300" BackgroundColor="{Binding Colores}"   >
                             
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
